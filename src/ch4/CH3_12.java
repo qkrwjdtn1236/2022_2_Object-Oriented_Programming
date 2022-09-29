@@ -16,7 +16,7 @@ public class CH3_12 {
     }
 
     public static int get_max(int x, int y){
-        return (x>=y)?x:y;
+        return Math.max(x, y);
     }
 }
 
