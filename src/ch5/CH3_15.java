@@ -22,7 +22,6 @@ public class CH3_15 {
                 default -> 'E';
             };
             System.out.println("당신의 성적 등급은 "+result+"입니다.");
-
         }
         sc.close();
         System.out.println("프로그램을 종료합니다!");

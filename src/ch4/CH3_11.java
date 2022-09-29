@@ -5,7 +5,6 @@ import java.util.Scanner;
 public class CH3_11 {
     public static void main(String[] args){
         Scanner sc = new Scanner(System.in);
-        String result;
 
         while(true){
             System.out.print("성적을 입력하세요 : ");
@@ -24,7 +23,7 @@ public class CH3_11 {
             System.out.println("당신의 성적 등급은 "+rank+"입니다.");
         }
         sc.close();
-        System.out.println("프로그램을 종룍합니다.");
+        System.out.println("프로그램을 종료합니다.");
 
     }
 }

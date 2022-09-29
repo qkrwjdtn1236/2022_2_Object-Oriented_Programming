@@ -15,7 +15,7 @@ public class CH3_12 {
         System.out.println("두 수 중에 큰 수는 "+get_max(x,y)+" 입니다.");
     }
 
-    static int get_max(int x, int y){
+    public static int get_max(int x, int y){
         return (x>=y)?x:y;
     }
 }
