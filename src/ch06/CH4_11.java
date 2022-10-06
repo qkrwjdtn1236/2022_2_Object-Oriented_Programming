@@ -7,13 +7,9 @@ public class CH4_11 {
     static void swap(Number n){
 
         int temp = n.a;
-
         n.a = n.c;
-
         n.c = n.b;
-
         n.b = temp;
-
         System.out.printf("swap() 메서드 호출 후 : %d %d %d",n.a,n.b,n.c);
 
     }

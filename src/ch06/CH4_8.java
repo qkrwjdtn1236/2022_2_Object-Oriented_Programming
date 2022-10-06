@@ -8,18 +8,14 @@ public class CH4_8 {
 }
 
 class Triangle{
-    private double r;
-    private double h;
-    private double area;
+    private double r, h;
 
     Triangle(double a,double b){
         this.r = a;
         this.h = b;
-        this.area = this.r * this.h /2;
     }
-
     public double findArea(){
-        return this.area;
+        return this.r * this.h /2;
     }
 
     public boolean isSameArea(Triangle t){

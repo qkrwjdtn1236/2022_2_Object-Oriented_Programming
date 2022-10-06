@@ -11,11 +11,8 @@ public class CH4_3 {
         yourPhone.model = "G6";
         yourPhone.value = 85;
         yourPhone.print();
-
     }
-
 }
-
 class Phone{
     String model;
     int value;

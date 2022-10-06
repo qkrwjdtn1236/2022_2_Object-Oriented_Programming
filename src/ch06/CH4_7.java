@@ -2,7 +2,8 @@ package ch06;
 
 public class CH4_7 {
     public static void main(String[] args){
-        CircleConstructor circleConstructor = new CircleConstructor(100.0);
+        CircleConstructor circleConstructor =
+                new CircleConstructor(100.0);
     }
 }
 

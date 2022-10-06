@@ -18,9 +18,7 @@ public class CH4_8_1 {
 }
 
 class Cylinder{
-    private double r;
-    private double h;
-
+    private double r, h;
     Cylinder(double r,double h){
         this.r = r;
         this.h = h;

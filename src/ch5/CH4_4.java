@@ -14,7 +14,6 @@ public class CH4_4 {
         yourPhone.print();
     }
 }
-
 class Phone1{
     String model;
     int value;

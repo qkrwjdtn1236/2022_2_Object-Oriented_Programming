@@ -15,7 +15,6 @@ public class CH4_9 {
         dog_prn(d2);
 
     }
-
     static void dog_prn(Dog d){
         System.out.println("이름 : "+d.name);
         System.out.println("품종 : "+d.breeds);
@@ -23,14 +22,11 @@ public class CH4_9 {
         d.wag();
         d.bark();
     }
-
 }
 
 class Dog{
-    String name;
-    String breeds;
+    String name, breeds;
     int age;
-
     void wag(){
         System.out.println(name+"가 살랑살랑~");
     }

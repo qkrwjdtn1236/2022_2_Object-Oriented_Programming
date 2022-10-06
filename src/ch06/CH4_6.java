@@ -9,7 +9,6 @@ public class CH4_6 {
         myPhone.print();
 
         Phone yourPhone = new Phone();
-
         yourPhone.setModel("G6");
         yourPhone.setValue(85);
         yourPhone.print();
@@ -24,7 +23,6 @@ class Phone{
     void print(){
         System.out.printf("%d만 원짜리 %s 스마트폰\n",this.value,this.model);
     }
-
     public void setModel(String model){
         this.model = model;
     }
