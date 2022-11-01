@@ -89,9 +89,22 @@ class ttt{
             }
         }
     }
-//    boolean isGameEnd(){
-//
-//    }
+    boolean isGameEnd(char[][] tttboard,char shape){
+        if (tttboard[0][0] == shape && tttboard[1][1] == shape && tttboard[2][2] == shape)
+            return true;
+
+        if (tttboard[2][0] == shape && tttboard[1][1] == shape && tttboard[0][2] == shape)
+            return true;
+
+        for(int i = 0;i<tttboard.length;i++)
+            if (tttboard[i][0] == shape && tttboard[i][1] ==shape && tttboard[i][2]==shape) return true;
+
+        for(int i = 0;i<tttboard.length;i++)
+            if (tttboard[0][i] == shape && tttboard[1][i] ==shape && tttboard[2][i]==shape) return true;
+
+        return false;
+
+    }
 
 
 
