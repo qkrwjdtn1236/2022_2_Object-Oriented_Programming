@@ -45,8 +45,9 @@ class ttt{
     }
 
     void singleGameStart(){
-        this.board = new char[][]{{'_', '_', '_'}, {'_', '_', '_'}, {'_', '_', '_'}};
+        this.board = new char[3][3];
         whoFirstRound(1);
+
 
     }
     void doubleGameStart(){
@@ -88,6 +89,11 @@ class ttt{
             }
         }
     }
+//    boolean isGameEnd(){
+//
+//    }
+
+
 
     int[] inputPos(String name){
         System.out.println(name+"님 x,y 좌표 입력해주세요.");
