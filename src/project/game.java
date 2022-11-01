@@ -10,11 +10,14 @@ public class game {
 }
 
 class ttt{
-    Scanner sc;
+    Scanner sc = new Scanner(System.in);;
     int winCount;
     int loseCount;
 
-    char[] playerList;
+    char[] playerList; // 봇전 모양, 플레이어 모양
+
+    char[][] board;
+
     ttt(){
 
         sc = new Scanner(System.in);
@@ -42,6 +45,7 @@ class ttt{
     }
 
     void singleGameStart(){
+        this.board = new char[][]{{'_', '_', '_'}, {'_', '_', '_'}, {'_', '_', '_'}};
         whoFirstRound(1);
 
     }
@@ -75,13 +79,18 @@ class ttt{
             switch (result) {
                 case 1 -> {
                     this.playerList = new char[]{'O', 'X'};
-                    System.out.println("당신이 선공입니다.(모양 : O)");
+                    System.out.println("플레이어1 선공입니다.");
                 }
                 case 2 -> {
                     this.playerList = new char[]{'X', 'O'};
-                    System.out.println("봇이 선공입니다.(모양 : X)");
+                    System.out.println("플레이어2 선공입니다.");
                 }
             }
         }
+    }
+
+    int[] inputPos(String name){
+        System.out.println(name+"님 x,y 좌표 입력해주세요.");
+        return new int[]{sc.nextInt(), sc.nextInt()};
     }
 }
