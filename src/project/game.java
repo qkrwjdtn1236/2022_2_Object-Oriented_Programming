@@ -47,6 +47,10 @@ class ttt{
     void singleGameStart(){
         this.board = new char[3][3];
         whoFirstRound(1);
+        int round = 0;
+        while(!(this.isGameEnd(this.board,'O') || this.isGameEnd(this.board,'X'))){
+
+        }
 
 
     }
@@ -103,10 +107,7 @@ class ttt{
             if (tttboard[0][i] == shape && tttboard[1][i] ==shape && tttboard[2][i]==shape) return true;
 
         return false;
-
     }
-
-
 
     int[] inputPos(String name){
         System.out.println(name+"님 x,y 좌표 입력해주세요.");
