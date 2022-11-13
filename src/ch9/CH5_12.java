@@ -17,7 +17,7 @@ public class CH5_12 {
         }
         System.out.print("배열 원소 :");
         for(int i : score){
-            System.out.printf("%2d",i);
+            System.out.printf("%2d ",i);
         }
     }
 }
