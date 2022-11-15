@@ -24,16 +24,16 @@ public class CH6_1 {
 
 class Total{
     int kor,math,eng;
-
-    int calc_total(){
-        int result = this.kor+this.math+this.eng;
-        System.out.println("총점은 "+(result)+"이다.");
-        return result;
+    int sum;
+    void calc_total(){
+        this.sum = this.kor+this.math+this.eng;
+        System.out.println("총점은 "+(this.sum)+"이다.");
     }
 }
 
 class Average extends Total{
+
     void calc_avr(){
-        System.out.println("평균은 "+(super.calc_total()/3.0)+"이다.");
+        System.out.println("평균은 "+(super.sum/3.0)+"이다.");
     }
 }
