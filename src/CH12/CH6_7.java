@@ -37,7 +37,8 @@ final class Telephone extends Phone{
         this.when = when;
     }
     void autoAnswering(){
-        System.out.println(super.owner+"가 부재 중이다."+this.when+" 전화 줄래.");
+        System.out.println(
+                super.owner+"가 부재 중이다."+this.when+" 전화 줄래.");
     }
 }
 
@@ -49,6 +50,7 @@ final class Smartphone extends Phone{
         this.game = game;
     }
     void playGame(){
-        System.out.println(super.owner+"가 "+this.game+" 게임을 하는 중이다.");
+        System.out.println(
+                super.owner+"가 "+this.game+" 게임을 하는 중이다.");
     }
 }

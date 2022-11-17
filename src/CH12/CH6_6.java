@@ -2,14 +2,6 @@ package CH12;
 
 public class CH6_6 {
     public static void main(String[] args){
-//        Parent p;
-//        p = new Parent();
-//        p.print();
-//
-//        p = new Child();
-//
-//        p.print();
-
         Parent p;
         Child c = new Child();
         p = c;

@@ -2,7 +2,12 @@ package CH12;
 
 public class CH6_5 {
     public static void main(String[] args){
-        
+        Circle circle = new Circle(5);
+        circle.show();
+
+        ColoredCircle coloredCircle =
+                new ColoredCircle(10,"빨간색");
+        coloredCircle.show();
     }
 }
 
@@ -25,6 +30,7 @@ class ColoredCircle extends Circle{
         this.color = color;
     }
     void show(){
-        System.out.println("반지름이 "+this.radius+"인 "+this.color+" 원이다.");
+        System.out.println(
+                "반지름이 "+this.radius+"인 "+this.color+" 원이다.");
     }
 }
