@@ -1,5 +1,6 @@
 package project;
 
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -69,8 +70,55 @@ class ttt{
         System.out.println(this.playerList[round%this.playerList.length]+"말 승리");
     }
 
-    private void botProcess(char[][] board) {
+    private boolean botProcess(char[][] board) { // 컴퓨터가 수를 두는 것을 작동하는 메소드
+        char[][] copyBoard = new char[board.length][board[0].length];
 
+        for(int i = 0; i < copyBoard.length; i++){ // 반복문 + ArrayCopy
+            System.arraycopy(board[i], 0, copyBoard[i], 0, copyBoard[i].length);
+        }
+        for(int i = 0;i<copyBoard.length;i++){ // 모든 수의 공간 탐색 , 봇이 이긴 수인지 확인하기 위한 반복문
+
+            //시뮬레이터 할 보드 배열를 구하고 처리해야함.
+
+            for(int j = 0;j<copyBoard[i].length;j++)
+            {
+                if(copyBoard[i][j] == '\u0000'){ // char 초기 값이 \u0000 이거라고 함
+                    // 수를 두지 않은 값을 때 조건문 true 발생
+                    copyBoard[i][j] = 'X';
+                    if(isGameEnd(copyBoard,'X')){ // 봇이 이길 수 있는 수를 찾는 과정, 즉 봇이 이긴 판인지 확인
+                        return true; // 봇이 게임에서 인긴 경우 true 리턴
+                    }
+                    copyBoard[i][j] = '\u0000'; // 현재 상태의 보드
+                }
+            }
+        }
+        for(int i = 0;i<copyBoard.length;i++) // 플레이어가 이긴 수를 탐색하기 위한 반복문
+        {
+            for(int j = 0;j<copyBoard[i].length;j++)
+            {
+                if(copyBoard[i][j] == '\u0000'){ // char 초기 값이 \u0000 이거라고 함
+                    // 수를 두지 않은 값을 때 조건문 true 발생
+                    copyBoard[i][j] = 'O';
+                    if(isGameEnd(copyBoard,'O')){ // 플레이어가 이길 수 있는 수를 찾는 과정, 즉 봇이 이긴 판인지 확인
+                        this.board[i][j] = 'X';
+                        return false; // 게임에서 봇이 게임에서 이긴 것이 아니거나 게임 진행 중인 상태
+                    }
+                    copyBoard[i][j] = '\u0000'; // 현재 상태의 보드로 변환 (다음 연산하기 위해 마무리하는 과정)
+                }
+            }
+        }
+
+        for(int i = 0;i<copyBoard.length;i++) // 봇, 플레이어가 이길 수 있는 수가 없을 때 실행하는 반복문
+        {
+            for(int j = 0;j< copyBoard.length;j++)
+            {
+                if(copyBoard[i][j] == '\u0000'){
+                    this.board[i][j] = 'X';
+                    return false;
+                }
+            }
+        }
+        return false; // 게임에서 봇이 게임에서 이긴 것이 아니거나 게임 진행 중인 상태, 이 코드가 실행이 안되어야 함(실행 된다는 건 조건문이 잘 작동 안하는 것임을 의미)
     }
 
     void showWinLose(){
@@ -120,4 +168,31 @@ class ttt{
         }while((this.board[y][x] == 'O') || (this.board[y][x] == 'X')||(x<1)||(y<1));
         board[y][x] = 'O';
     }
+
+    void rotateTTT(){ // ttt보드에서 상하반전 해주는 메소드
+        Random rand = new Random();
+        int[] degreeList = {90,180,270};
+
+        int n = this.board.length;
+        int m = this.board[0].length;
+
+        int degree = degreeList[rand.nextInt(degreeList.length)];
+        for (int i = 0; i < this.board.length; i++) {
+            for (int j = 0; j < this.board[i].length; j++) {
+                switch (degree) {
+                    case 90:
+                        this.board[i][j] = this.board[n-1-j][i];
+                        break;
+                    case 180:
+                        this.board[i][j] = this.board[n-1-i][m-1-j];
+                        break;
+                    case 270:
+                        this.board[i][j] = this.board[j][m-1-i];
+                        break;
+                }
+            }
+        }
+    }
+
+    void reverseRock(){} // 수의 모양을 바꾸는 메소드
 }
