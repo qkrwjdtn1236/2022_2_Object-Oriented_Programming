@@ -43,12 +43,32 @@ class ttt{
 
     }
 
+    void printTTTBoard(){
+        System.out.println("---------------------------");
+        for(int i = 0;i<this.board.length;i++)
+        {
+            for(int j = 0;j<this.board[i].length;j++)
+            {
+                if(this.board[i][j] == '\u0000'){
+                    System.out.print(" | ");
+
+                    continue;
+                }else {
+                    System.out.printf(" %c ", this.board[i][j]);
+                }
+            }
+            System.out.println();
+        }
+        System.out.println("---------------------------");
+    }
+
     void singleGameStart(){
         this.board = new char[3][3];
         whoFirstRound();
+        boolean isBotWin = false;
         int round = 0;
         while(!(this.isGameEnd(this.board,'O') || this.isGameEnd(this.board,'X'))){
-
+            printTTTBoard();
 //            for(int i = 0;i<this.playerList.length;i++){
 //                if(this.playerList[i] == 'O') {
 //                    // 플레이어 인경우
@@ -57,15 +77,25 @@ class ttt{
 //
 //                }
 //            }
+            if(round == this.board.length*this.board[0].length){
+                System.out.println("무승부");
+                return;
+            }
+
             if(this.playerList[round%this.playerList.length] == 'O'){ // 플레이어 인 경우
                 inputPos("플레이어");
                 if (isGameEnd(this.board,'O')){
                     break;
                 }
             }else{
-                botProcess(this.board);
+                if(botProcess(this.board)){
+                    printTTTBoard();
+                    break;
+                }
+
             }
             round++;
+
         }
         System.out.println(this.playerList[round%this.playerList.length]+"말 승리");
     }
@@ -76,6 +106,7 @@ class ttt{
         for(int i = 0; i < copyBoard.length; i++){ // 반복문 + ArrayCopy
             System.arraycopy(board[i], 0, copyBoard[i], 0, copyBoard[i].length);
         }
+
         for(int i = 0;i<copyBoard.length;i++){ // 모든 수의 공간 탐색 , 봇이 이긴 수인지 확인하기 위한 반복문
 
             //시뮬레이터 할 보드 배열를 구하고 처리해야함.
@@ -86,6 +117,7 @@ class ttt{
                     // 수를 두지 않은 값을 때 조건문 true 발생
                     copyBoard[i][j] = 'X';
                     if(isGameEnd(copyBoard,'X')){ // 봇이 이길 수 있는 수를 찾는 과정, 즉 봇이 이긴 판인지 확인
+                        this.board[i][j] = 'X';
                         return true; // 봇이 게임에서 인긴 경우 true 리턴
                     }
                     copyBoard[i][j] = '\u0000'; // 현재 상태의 보드
@@ -107,18 +139,28 @@ class ttt{
                 }
             }
         }
+        int x,y;
+        do{
+            Random random = new Random();
 
-        for(int i = 0;i<copyBoard.length;i++) // 봇, 플레이어가 이길 수 있는 수가 없을 때 실행하는 반복문
-        {
-            for(int j = 0;j< copyBoard.length;j++)
-            {
-                if(copyBoard[i][j] == '\u0000'){
-                    this.board[i][j] = 'X';
-                    return false;
-                }
-            }
-        }
+            x = random.nextInt(this.board[0].length);
+            y = random.nextInt(this.board.length);
+        }while(this.board[y][x] != '\u0000');
+
+        this.board[y][x] = 'X';
         return false; // 게임에서 봇이 게임에서 이긴 것이 아니거나 게임 진행 중인 상태, 이 코드가 실행이 안되어야 함(실행 된다는 건 조건문이 잘 작동 안하는 것임을 의미)
+
+//        for(int i = 0;i<copyBoard.length;i++) // 봇, 플레이어가 이길 수 있는 수가 없을 때 실행하는 반복문
+//        {
+//            for(int j = 0;j< copyBoard.length;j++)
+//            {
+//                if(copyBoard[i][j] == '\u0000'){
+//                    this.board[i][j] = 'X';
+//                    return false;
+//                }
+//            }
+//        }
+
     }
 
     void showWinLose(){
@@ -143,17 +185,28 @@ class ttt{
         }
     }
     boolean isGameEnd(char[][] tttboard,char shape){
-        if (tttboard[0][0] == shape && tttboard[1][1] == shape && tttboard[2][2] == shape)
+        if (tttboard[0][0] == shape && tttboard[1][1] == shape && tttboard[2][2] == shape){
+            System.out.println("case 1");return true;
+
+        }
+
+        if (tttboard[2][0] == shape && tttboard[1][1] == shape && tttboard[0][2] == shape){
+            System.out.println("case 2");
             return true;
 
-        if (tttboard[2][0] == shape && tttboard[1][1] == shape && tttboard[0][2] == shape)
-            return true;
+        }
 
         for(int i = 0;i<tttboard.length;i++)
-            if (tttboard[i][0] == shape && tttboard[i][1] ==shape && tttboard[i][2]==shape) return true;
+            if ((tttboard[i][0] == shape) && (tttboard[i][1] ==shape) && (tttboard[i][2]==shape)) {
+                System.out.println(shape+"case 3");
+                return true;
+            }
 
         for(int i = 0;i<tttboard.length;i++)
-            if (tttboard[0][i] == shape && tttboard[1][i] ==shape && tttboard[2][i]==shape) return true;
+            if ((tttboard[0][i] == shape) && (tttboard[1][i] ==shape) && (tttboard[2][i]==shape)) {
+                System.out.println(shape+"case 4");
+                return true;
+            }
 
         return false;
     }
@@ -164,8 +217,8 @@ class ttt{
             System.out.println("위치를 입력하세요.");
             System.out.println(name+"님 x,y 좌표 입력해주세요.");
             x = this.sc.nextInt()-1;
-            y = this.sc.nextInt()-1;
-        }while((this.board[y][x] == 'O') || (this.board[y][x] == 'X')||(x<1)||(y<1));
+            y = this.board.length - this.sc.nextInt();
+        }while((this.board[y][x] == 'O') || (this.board[y][x] == 'X'));
         board[y][x] = 'O';
     }
 
