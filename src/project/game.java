@@ -1,6 +1,4 @@
 package project;
-
-import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -11,7 +9,7 @@ public class game {
 }
 
 class ttt{
-    Scanner sc = new Scanner(System.in);;
+    Scanner sc = new Scanner(System.in);
     int winCount;
     int loseCount;
 
@@ -28,7 +26,11 @@ class ttt{
         switch (selectCase){
             case 1->singleGameStart();
             case 2->showWinLose();
+            case 3->gameEnd();
         }
+    }
+    void gameEnd(){
+        return;
     }
 
     void titlePrint(){
@@ -67,8 +69,9 @@ class ttt{
         whoFirstRound();
         boolean isBotWin = false;
         int round = 0;
+        printTTTBoard();
         while(!(this.isGameEnd(this.board,'O') || this.isGameEnd(this.board,'X'))){
-            printTTTBoard();
+
 //            for(int i = 0;i<this.playerList.length;i++){
 //                if(this.playerList[i] == 'O') {
 //                    // 플레이어 인경우
@@ -94,8 +97,10 @@ class ttt{
                 }
 
             }
+            printTTTBoard();
             round++;
-
+//            rotateTTT();
+//            reverseRock();
         }
         System.out.println(this.playerList[round%this.playerList.length]+"말 승리");
     }
@@ -171,8 +176,8 @@ class ttt{
 
     void whoFirstRound() {
         Random random = new Random();
-        int result = random.nextInt(1) + 1;
-
+        int result = random.nextInt(2) + 1;
+        System.out.println(result);
         switch (result) {
             case 1 -> {
                 this.playerList = new char[]{'O', 'X'};
@@ -226,6 +231,12 @@ class ttt{
         Random rand = new Random();
         int[] degreeList = {90,180,270};
 
+        char[][] copyBoard = new char[board.length][board[0].length];
+
+        for(int i = 0; i < copyBoard.length; i++){ // 반복문 + ArrayCopy
+            System.arraycopy(board[i], 0, copyBoard[i], 0, copyBoard[i].length);
+        }
+
         int n = this.board.length;
         int m = this.board[0].length;
 
@@ -233,19 +244,33 @@ class ttt{
         for (int i = 0; i < this.board.length; i++) {
             for (int j = 0; j < this.board[i].length; j++) {
                 switch (degree) {
-                    case 90:
-                        this.board[i][j] = this.board[n-1-j][i];
-                        break;
-                    case 180:
-                        this.board[i][j] = this.board[n-1-i][m-1-j];
-                        break;
-                    case 270:
-                        this.board[i][j] = this.board[j][m-1-i];
-                        break;
+                    case 90 -> this.board[i][j] = this.board[n - 1 - j][i];
+                    case 180 -> this.board[i][j] = this.board[n - 1 - i][m - 1 - j];
+                    case 270 -> this.board[i][j] = this.board[j][m - 1 - i];
                 }
             }
         }
     }
 
-    void reverseRock(){} // 수의 모양을 바꾸는 메소드
+    char[][] reverseRock(){
+
+        char[][] copyBoard = new char[board.length][board[0].length];
+
+        for(int i = 0; i < copyBoard.length; i++){ // 반복문 + ArrayCopy
+            System.arraycopy(board[i], 0, copyBoard[i], 0, copyBoard[i].length);
+        }
+
+        for(int i = 0;i<copyBoard.length;i++)
+        {
+            for(int j = 0;j<copyBoard[i].length;j++)
+            {
+                if(copyBoard[i][j] == 'X')
+                    copyBoard[i][j] = 'O';
+                else if(copyBoard[i][j] == 'O')
+                    copyBoard[i][j] = 'X';
+            }
+        }
+
+        return copyBoard;
+    } // 수의 모양을 바꾸는 메소드
 }
