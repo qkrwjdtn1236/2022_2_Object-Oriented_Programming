@@ -64,37 +64,57 @@ class ttt{
         System.out.println("---------------------------");
     }
 
-    void singleGameStart(){
-        this.board = new char[3][3];
-        whoFirstRound();
-        boolean isBotWin = false;
-        int round = 0;
-        printTTTBoard();
-        while(!(this.isGameEnd(this.board,'O') || this.isGameEnd(this.board,'X'))){
+    boolean singleGameStart(){ // 플레이어가 게임에서 이긴 경우 true, 진 경우 false로 리턴함
+        for(int i = 0;i<3;i++)
+        {
 
-            if(round == this.board.length*this.board[0].length){
-                System.out.println("무승부");
-                return;
-            }
-
-            if(this.playerList[round%this.playerList.length] == 'O'){ // 플레이어 인 경우
-                inputPos("플레이어");
-                if (isGameEnd(this.board,'O')){
-                    break;
-                }
-            }else{
-                if(botProcess(this.board)){
-                    printTTTBoard();
-                    break;
-                }
-
-            }
+            this.board = new char[3][3];
+            whoFirstRound();
+            int round = 0;
             printTTTBoard();
-            round++;
+            while(!(this.isGameEnd(this.board,'O') || this.isGameEnd(this.board,'X'))){
+
+                if(round == this.board.length*this.board[0].length){
+                    System.out.println("무승부");
+                    break;
+                }
+
+                if(this.playerList[round%this.playerList.length] == 'O'){ // 플레이어 인 경우
+                    inputPos("플레이어");
+                    if (isGameEnd(this.board,'O')){
+                        System.out.println(this.playerList[round%this.playerList.length]+"말 승리");
+                        this.winCount++;
+                        break;
+                    }
+                }else{
+                    if(botProcess(this.board)){
+                        printTTTBoard();
+                        System.out.println(this.playerList[round%this.playerList.length]+"말 승리");
+                        this.loseCount++;
+                        break;
+                    }
+                }
+
+                printTTTBoard();
+                round++;
 //            rotateTTT();
 //            reverseRock();
+            }
+
+
         }
-        System.out.println(this.playerList[round%this.playerList.length]+"말 승리");
+
+        if(this.winCount>this.loseCount){
+            System.out.println("최종 승리 : 플레이어");
+            return true;
+        }
+        else if ((this.winCount == 0)&&(this.loseCount == 0))
+            singleGameStart();
+        else{
+            System.out.println("최종 승리 : 봇");
+            return false;
+        }
+        return false;
     }
 
     private boolean botProcess(char[][] board) { // 컴퓨터가 수를 두는 것을 작동하는 메소드
@@ -103,39 +123,44 @@ class ttt{
         for(int i = 0; i < copyBoard.length; i++){ // 반복문 + ArrayCopy
             System.arraycopy(board[i], 0, copyBoard[i], 0, copyBoard[i].length);
         }
+        if(0.3<Math.random()){ // 봇 실력 떨구기 위함.
+            for(int i = 0;i<copyBoard.length;i++){ // 모든 수의 공간 탐색 , 봇이 이긴 수인지 확인하기 위한 반복문
 
-        for(int i = 0;i<copyBoard.length;i++){ // 모든 수의 공간 탐색 , 봇이 이긴 수인지 확인하기 위한 반복문
+                //시뮬레이터 할 보드 배열를 구하고 처리해야함.
 
-            //시뮬레이터 할 보드 배열를 구하고 처리해야함.
-
-            for(int j = 0;j<copyBoard[i].length;j++)
-            {
-                if(copyBoard[i][j] == '\u0000'){ // char 초기 값이 \u0000 이거라고 함
-                    // 수를 두지 않은 값을 때 조건문 true 발생
-                    copyBoard[i][j] = 'X';
-                    if(isGameEnd(copyBoard,'X')){ // 봇이 이길 수 있는 수를 찾는 과정, 즉 봇이 이긴 판인지 확인
-                        this.board[i][j] = 'X';
-                        return true; // 봇이 게임에서 인긴 경우 true 리턴
+                for(int j = 0;j<copyBoard[i].length;j++)
+                {
+                    if(copyBoard[i][j] == '\u0000'){ // char 초기 값이 \u0000 이거라고 함
+                        // 수를 두지 않은 값을 때 조건문 true 발생
+                        copyBoard[i][j] = 'X';
+                        if(isGameEnd(copyBoard,'X')){ // 봇이 이길 수 있는 수를 찾는 과정, 즉 봇이 이긴 판인지 확인
+                            this.board[i][j] = 'X';
+                            return true; // 봇이 게임에서 인긴 경우 true 리턴
+                        }
+                        copyBoard[i][j] = '\u0000'; // 현재 상태의 보드
                     }
-                    copyBoard[i][j] = '\u0000'; // 현재 상태의 보드
                 }
             }
         }
-        for(int i = 0;i<copyBoard.length;i++) // 플레이어가 이긴 수를 탐색하기 위한 반복문
-        {
-            for(int j = 0;j<copyBoard[i].length;j++)
+
+        if(0.5<Math.random()){ // 봇 실력 떨구기 위함.
+            for(int i = 0;i<copyBoard.length;i++) // 플레이어가 이긴 수를 탐색하기 위한 반복문
             {
-                if(copyBoard[i][j] == '\u0000'){ // char 초기 값이 \u0000 이거라고 함
-                    // 수를 두지 않은 값을 때 조건문 true 발생
-                    copyBoard[i][j] = 'O';
-                    if(isGameEnd(copyBoard,'O')){ // 플레이어가 이길 수 있는 수를 찾는 과정, 즉 봇이 이긴 판인지 확인
-                        this.board[i][j] = 'X';
-                        return false; // 게임에서 봇이 게임에서 이긴 것이 아니거나 게임 진행 중인 상태
+                for(int j = 0;j<copyBoard[i].length;j++)
+                {
+                    if(copyBoard[i][j] == '\u0000'){ // char 초기 값이 \u0000 이거라고 함
+                        // 수를 두지 않은 값을 때 조건문 true 발생
+                        copyBoard[i][j] = 'O';
+                        if(isGameEnd(copyBoard,'O')){ // 플레이어가 이길 수 있는 수를 찾는 과정, 즉 봇이 이긴 판인지 확인
+                            this.board[i][j] = 'X';
+                            return false; // 게임에서 봇이 게임에서 이긴 것이 아니거나 게임 진행 중인 상태
+                        }
+                        copyBoard[i][j] = '\u0000'; // 현재 상태의 보드로 변환 (다음 연산하기 위해 마무리하는 과정)
                     }
-                    copyBoard[i][j] = '\u0000'; // 현재 상태의 보드로 변환 (다음 연산하기 위해 마무리하는 과정)
                 }
             }
         }
+
         int x,y;
         do{
             Random random = new Random();
