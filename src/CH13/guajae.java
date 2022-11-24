@@ -2,11 +2,13 @@ package CH13;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class guajae extends JFrame {
     JTextField r;
     JTextField m2;
-
+    JTextArea memo;
 
     public static void main(String[] args){
         new guajae();
@@ -48,7 +50,7 @@ public class guajae extends JFrame {
 
     void middle(){
         JPanel p = new JPanel();
-        JTextArea memo = new JTextArea(30,20);
+        memo = new JTextArea(30,20);
         memo.setText("원의 넓이를 계산하는 과정이 나오는 곳입니다.");
         memo.setEditable(false);
         p.add(memo);
@@ -57,13 +59,27 @@ public class guajae extends JFrame {
 
     void bottom(){
 
-        String[] type = {"a","b","c","d","e"};
+        String[] type = {"Red","Green","Blue"};
+
+        JButton process = new JButton("계산");
+        JButton reset = new JButton("리셋");
+
+        // 실습 문제 기다리는 동안 이벤트 예습
+        process.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                double radius = Double.parseDouble(r.getText());
+                m2.setText(String.valueOf(radius*radius*3.14));
+
+                memo.setText(String.valueOf(radius)+" * "+String.valueOf(radius)+
+                        " = "+m2.getText());
+            }
+        });
         JPanel p = new JPanel(new FlowLayout(FlowLayout.CENTER,10,10));
-        p.add(new JButton("계산"));
+        p.add(process);
         p.add(new JComboBox<>(type));
-        p.add(new JButton("리셋"));
+        p.add(reset);
 
         add(p,BorderLayout.SOUTH);
     }
-
 }

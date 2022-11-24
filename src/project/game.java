@@ -72,14 +72,6 @@ class ttt{
         printTTTBoard();
         while(!(this.isGameEnd(this.board,'O') || this.isGameEnd(this.board,'X'))){
 
-//            for(int i = 0;i<this.playerList.length;i++){
-//                if(this.playerList[i] == 'O') {
-//                    // 플레이어 인경우
-//                    inputPos("플레이어");
-//                    if (isGameEnd(this.board,'O'))
-//
-//                }
-//            }
             if(round == this.board.length*this.board[0].length){
                 System.out.println("무승부");
                 return;
