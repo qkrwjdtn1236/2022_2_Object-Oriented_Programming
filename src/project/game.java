@@ -3,7 +3,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class game {
-    public static void main(String[] args){
+    public static void main(String[] args) throws InterruptedException {
         ttt game = new ttt();
     }
 }
@@ -17,7 +17,7 @@ class ttt{
 
     char[][] board;
 
-    ttt(){
+    ttt() throws InterruptedException {
 
         sc = new Scanner(System.in);
         this.titlePrint();
@@ -32,8 +32,27 @@ class ttt{
     void gameEnd(){
         return;
     }
-
-    void titlePrint(){
+    void clearText(){
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
+    void shownNoiseScreen() throws InterruptedException {
+        char[] noiceText = {'#','~','%','$','@','&','^','/','\\'};
+        clearText();
+        Random random = new Random();
+        for(int i = 0;i<5;i++)
+        {
+            for(int j = 0;j<20;j++)
+            {
+                Thread.sleep(random.nextInt(30,150));
+                System.out.print(noiceText[random.nextInt(noiceText.length)]);
+            }
+            System.out.println();
+        }
+        clearText();
+    }
+    void titlePrint() throws InterruptedException {
+        shownNoiseScreen();
         System.out.println("-------------------------");
         System.out.println("------Tic Tac Toe--------");
         System.out.println("-------------------------");
@@ -65,6 +84,7 @@ class ttt{
     }
 
     boolean singleGameStart(){ // 플레이어가 게임에서 이긴 경우 true, 진 경우 false로 리턴함
+        clearText();
         for(int i = 0;i<3;i++)
         {
 
@@ -84,6 +104,7 @@ class ttt{
                     if (isGameEnd(this.board,'O')){
                         System.out.println(this.playerList[round%this.playerList.length]+"말 승리");
                         this.winCount++;
+                        clearText();
                         break;
                     }
                 }else{
@@ -91,10 +112,11 @@ class ttt{
                         printTTTBoard();
                         System.out.println(this.playerList[round%this.playerList.length]+"말 승리");
                         this.loseCount++;
+                        clearText();
                         break;
                     }
                 }
-
+                clearText();
                 printTTTBoard();
                 round++;
 //            rotateTTT();
