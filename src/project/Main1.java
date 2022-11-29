@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-public class BlackJack 
+class BlackJack
 {
 	private Random random;
 	private Scanner scanner;
@@ -24,7 +24,7 @@ public class BlackJack
 	private final double BLACK_JACK_WINRATE = 1.5; // 블랙 잭으로 승리할 경우 배팅액이 다르다.
 	private final String BLACK_JACK = "BlackJack!!!!!";
 	
-	BlackJack() 
+	BlackJack()
 	{
 		random = new Random();
 		scanner = new Scanner(System.in);
@@ -264,5 +264,13 @@ public class BlackJack
 			System.out.println("BlackJack 당신의 패배입니다. 돈을 잃으셨습니다.");
 		}
 	}
+}
 
+public class Main1 {
+
+	public static void main(String[] args) {
+		BlackJack blackJack = new BlackJack();
+		blackJack.playGame();
+		System.out.println("<<블랙잭이 종료되었습니다>>");
+	}
 }

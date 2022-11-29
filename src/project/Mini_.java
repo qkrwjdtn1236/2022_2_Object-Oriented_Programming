@@ -3,7 +3,7 @@ package project;
 import java.util.Random;
 import java.util.Scanner;
 
-public class Mini1 {
+public class Mini_ {
     Scanner sc = new Scanner(System.in); // 스케너 객체
     int cnt = 0; // 몇번 반복해서 실행하는건지 개수 측정
     int ball = 0, strike = 0;
@@ -11,7 +11,7 @@ public class Mini1 {
     int com[] = computerNumber(); // 컴퓨터에 난수 구한후 배열에 치한
     int[] userNum = new int[3]; // 유저 숫자 입력
 
-    Mini1() {
+    Mini_() {
 
 
         while (strike != 3) { // 3스트라이크가 안될경우 반복실행

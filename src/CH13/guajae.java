@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 public class guajae extends JFrame {
     JTextField r;
@@ -52,6 +54,7 @@ public class guajae extends JFrame {
         JPanel p = new JPanel();
         memo = new JTextArea(30,20);
         memo.setText("원의 넓이를 계산하는 과정이 나오는 곳입니다.");
+        memo.setForeground(Color.red);
         memo.setEditable(false);
         p.add(memo);
         add(p,BorderLayout.CENTER);
@@ -64,20 +67,48 @@ public class guajae extends JFrame {
         JButton process = new JButton("계산");
         JButton reset = new JButton("리셋");
 
+        reset.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                r.setText("");
+                m2.setText("");
+                memo.setText("");
+
+            }
+        });
+
         // 실습 문제 기다리는 동안 이벤트 예습
         process.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                double radius = Double.parseDouble(r.getText());
-                m2.setText(String.valueOf(radius*radius*3.14));
+                if(r.getText().isEmpty()){
+                    memo.setText("반지름을 다시 입력하세요.");
+                }else{
+                    double radius = Double.parseDouble(r.getText());
+                    m2.setText(String.valueOf(radius*radius*3.14));
 
-                memo.setText(String.valueOf(radius)+" * "+String.valueOf(radius)+
-                        " = "+m2.getText());
+                    memo.setText(String.valueOf(radius)+" * "+String.valueOf(radius)+
+                            " = "+m2.getText());
+                }
             }
         });
+
         JPanel p = new JPanel(new FlowLayout(FlowLayout.CENTER,10,10));
         p.add(process);
-        p.add(new JComboBox<>(type));
+
+        JComboBox<String> colorType = new JComboBox<>(type);
+        colorType.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                int index = colorType.getSelectedIndex();
+                switch(colorType.getItemAt(index)){
+                    case "Red" -> memo.setForeground(Color.RED);
+                    case "Green" -> memo.setForeground(Color.GREEN);
+                    case "Blue" -> memo.setForeground(Color.BLUE);
+                }
+            }
+        });
+        p.add(colorType);
         p.add(reset);
 
         add(p,BorderLayout.SOUTH);
